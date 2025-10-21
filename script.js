@@ -147,25 +147,16 @@ function sendToGmail() {
     }
     
     const subject = `Portfolio Contact from ${name}`;
-    const body = `Name: ${name} Email: ${email} Message: ${message}`;
+    const body = `Name: ${name}\nEmail: ${email}\nMessage: ${message}`;
     
-    const yourEmail = 'youssef03014@gmail.com';
+    // Direct mailto link - will open user's default email app
+    const mailtoLink = `mailto:youssef03014@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     
-    // Create mailto link for better mobile compatibility
-    const mailtoLink = `mailto:${yourEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    // Open email app immediately
+    window.location.href = mailtoLink;
     
-    // Try multiple approaches for better compatibility
-    try {
-        // Method 1: Direct mailto link
-        window.location.href = mailtoLink;
-    } catch (e) {
-        // Method 2: Open in new window
-        window.open(mailtoLink, '_blank');
-    }
-    
-    // Optional: Show success message after a delay
+    // Optional: Clear form after opening email
     setTimeout(() => {
-        alert('Email client opened! Please click send to complete.');
         document.getElementById('contactForm').reset();
     }, 1000);
 }
