@@ -147,7 +147,7 @@ function sendToGmail() {
     }
     
     const subject = `Portfolio Contact from ${name}`;
-    const body = `Name: ${name}%0D%0AEmail: ${email}%0D%0AMessage:%0D%0A${message}`;
+    const body = `Name: ${name} Email: ${email} Message: ${message}`;
     
     const yourEmail = 'youssef03014@gmail.com';
     
