@@ -147,19 +147,29 @@ function sendToGmail() {
     }
     
     const subject = `Portfolio Contact from ${name}`;
-    const body = `Name: ${name}Email: ${email}Message:%0D%0A${message}`;
+    const body = `Name: ${name}%0D%0AEmail: ${email}%0D%0AMessage:%0D%0A${message}`;
     
-    // Replace with your actual email
     const yourEmail = 'youssef03014@gmail.com';
     
-    window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${yourEmail}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`, '_blank');
+    // Create mailto link for better mobile compatibility
+    const mailtoLink = `mailto:${yourEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     
-    // Optional: Show success message
-    alert('Gmail compose window opened! Please click send to complete.');
+    // Try multiple approaches for better compatibility
+    try {
+        // Method 1: Direct mailto link
+        window.location.href = mailtoLink;
+    } catch (e) {
+        // Method 2: Open in new window
+        window.open(mailtoLink, '_blank');
+    }
     
-    // Optional: Clear the form
-    document.getElementById('contactForm').reset();
+    // Optional: Show success message after a delay
+    setTimeout(() => {
+        alert('Email client opened! Please click send to complete.');
+        document.getElementById('contactForm').reset();
+    }, 1000);
 }
+
 
 // Updated competencies array for penetration testing
 const competencies = [
