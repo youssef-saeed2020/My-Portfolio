@@ -147,20 +147,42 @@ function sendToGmail() {
     }
     
     const subject = `Portfolio Contact from ${name}`;
-    const body = `Name: ${name}\nEmail: ${email}\nMessage: ${message}`;
+    const body = `Name: ${name}%0D%0AEmail: ${email}%0D%0AMessage:%0D%0A${message}`;
     
-    // Direct mailto link - will open user's default email app
-    const mailtoLink = `mailto:youssef03014@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const yourEmail = 'youssef03014@gmail.com';
+    const mailtoLink = `mailto:${yourEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     
-    // Open email app immediately
-    window.location.href = mailtoLink;
+    // Method 1: Direct navigation (least likely to be blocked)
+    try {
+        window.location.href = mailtoLink;
+    } catch (e) {
+        // Method 2: Create a temporary link and click it
+        const link = document.createElement('a');
+        link.href = mailtoLink;
+        link.style.display = 'none';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
     
-    // Optional: Clear form after opening email
+    // Check if email app opened
     setTimeout(() => {
-        document.getElementById('contactForm').reset();
-    }, 1000);
+        const userConfirmed = confirm(
+            "If your email app didn't open automatically:\n\n" +
+            "1. Check if popups are blocked\n" +
+            "2. Try the manual email option below\n" +
+            "3. Or copy my email: youssef03014@gmail.com\n\n" +
+            "Did your email app open?"
+        );
+        
+        if (!userConfirmed) {
+            // Show manual options
+            showManualEmailOptions(name, email, message);
+        } else {
+            document.getElementById('contactForm').reset();
+        }
+    }, 2000);
 }
-
 
 
 // Updated competencies array for penetration testing
