@@ -136,7 +136,7 @@ $('a[href*="#"]').on('click', function(e) {
     );
 });
 
-function sendToGmail() {
+function sendEmailToMe() {
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
     const message = document.getElementById('message').value;
@@ -146,42 +146,17 @@ function sendToGmail() {
         return;
     }
     
-    const subject = `Portfolio Contact from ${name}`;
-    const body = `Name: ${name}%0D%0AEmail: ${email}%0D%0AMessage:%0D%0A${message}`;
+    // Direct Gmail compose URL - this actually sends to you
+    const gmailUrl = `https://mail.google.com/mail/u/0/?view=cm&fs=1&to=youssef03014@gmail.com&su=${encodeURIComponent(`Portfolio Contact from ${name}`)}&body=${encodeURIComponent(`Name: ${name}%0AEmail: ${email}%0A%0AMessage:%0A${message}%0A%0A---%0ASent via portfolio contact form`)}`;
     
-    const yourEmail = 'youssef03014@gmail.com';
-    const mailtoLink = `mailto:${yourEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    // Open Gmail in new tab
+    window.open(gmailUrl, '_blank', 'noopener,noreferrer');
     
-    // Method 1: Direct navigation (least likely to be blocked)
-    try {
-        window.location.href = mailtoLink;
-    } catch (e) {
-        // Method 2: Create a temporary link and click it
-        const link = document.createElement('a');
-        link.href = mailtoLink;
-        link.style.display = 'none';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    }
-    
-    // Check if email app opened
+    // Show success message
     setTimeout(() => {
-        const userConfirmed = confirm(
-            "If your email app didn't open automatically:\n\n" +
-            "1. Check if popups are blocked\n" +
-            "2. Try the manual email option below\n" +
-            "3. Or copy my email: youssef03014@gmail.com\n\n" +
-            "Did your email app open?"
-        );
-        
-        if (!userConfirmed) {
-            // Show manual options
-            showManualEmailOptions(name, email, message);
-        } else {
-            document.getElementById('contactForm').reset();
-        }
-    }, 2000);
+        alert('✅ Gmail opened! Please click "Send" to complete.\n\nIf Gmail didn\'t open, check your popup blocker.');
+        document.getElementById('contactForm').reset();
+    }, 1000);
 }
 
 
