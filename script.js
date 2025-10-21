@@ -136,28 +136,132 @@ $('a[href*="#"]').on('click', function(e) {
     );
 });
 
-function sendEmailToMe() {
+// Method 1: Copy Template (MOST RELIABLE)
+function copyEmailTemplate() {
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
     const message = document.getElementById('message').value;
     
+    // Validate form
     if (!name || !email || !message) {
-        alert('Please fill in all fields');
+        alert(' Please fill in all fields before copying the template.');
         return;
     }
     
-    // Direct Gmail compose URL - this actually sends to you
-    const gmailUrl = `https://mail.google.com/mail/u/0/?view=cm&fs=1&to=youssef03014@gmail.com&su=${encodeURIComponent(`Portfolio Contact from ${name}`)}&body=${encodeURIComponent(`Name: ${name}%0AEmail: ${email}%0A%0AMessage:%0A${message}%0A%0A---%0ASent via portfolio contact form`)}`;
-    
-    // Open Gmail in new tab
-    window.open(gmailUrl, '_blank', 'noopener,noreferrer');
-    
-    // Show success message
-    setTimeout(() => {
-        alert('✅ Gmail opened! Please click "Send" to complete.\n\nIf Gmail didn\'t open, check your popup blocker.');
+    // Create the email template
+    const emailTemplate = `To: youssef03014@gmail.com
+Subject: Cybersecurity Inquiry from ${name}
+
+Dear Youssef,
+
+I came across your portfolio and I'm interested in your cybersecurity services.
+
+Here are my details:
+• Name: ${name}
+• Email: ${email}
+
+My message:
+${message}
+
+I look forward to hearing from you.
+
+Best regards,
+${name}`;
+
+    // Copy to clipboard
+    navigator.clipboard.writeText(emailTemplate).then(() => {
+        // Success message with clear instructions
+        alert(` EMAIL TEMPLATE COPIED!
+
+Here's exactly what to do next:
+
+1.  OPEN your email app (Gmail, Outlook, Yahoo, etc.)
+2.  CREATE a new email
+3.  PASTE this template (Ctrl+V or Cmd+V)
+4.  CLICK SEND
+
+That's it! I'll receive your email directly at youssef03014@gmail.com
+
+The email is ready to send - it includes your details and message.`);
+
+        // Clear the form
         document.getElementById('contactForm').reset();
+        
+    }).catch(err => {
+        // Fallback for older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = emailTemplate;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        
+        alert(`EMAIL TEMPLATE COPIED!
+
+Now please:
+1. Open your email app
+2. Create new email
+3. Paste the content
+4. Click SEND
+
+I'll receive it at youssef03014@gmail.com`);
+        
+        document.getElementById('contactForm').reset();
+    });
+}
+
+// Method 2: Direct Email App Openers
+function openGmailCompose() {
+    const name = document.getElementById('name').value || 'Portfolio Visitor';
+    const email = document.getElementById('email').value || 'Not provided';
+    const message = document.getElementById('message').value || 'Interested in your cybersecurity services';
+    
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=youssef03014@gmail.com&su=${encodeURIComponent(`Cybersecurity Inquiry from ${name}`)}&body=${encodeURIComponent(`Name: ${name}%0AEmail: ${email}%0A%0AMessage:%0A${message}%0A%0A---%0ASent via portfolio`)}`;
+    
+    window.open(gmailUrl, '_blank');
+    showEmailInstructions('Gmail');
+}
+
+function openOutlookCompose() {
+    const name = document.getElementById('name').value || 'Portfolio Visitor';
+    const email = document.getElementById('email').value || 'Not provided';
+    const message = document.getElementById('message').value || 'Interested in your cybersecurity services';
+    
+    const outlookUrl = `https://outlook.live.com/owa/?path=/mail/action/compose&to=youssef03014@gmail.com&subject=${encodeURIComponent(`Cybersecurity Inquiry from ${name}`)}&body=${encodeURIComponent(`Name: ${name}%0AEmail: ${email}%0A%0AMessage:%0A${message}`)}`;
+    
+    window.open(outlookUrl, '_blank');
+    showEmailInstructions('Outlook');
+}
+
+function openDefaultEmail() {
+    const name = document.getElementById('name').value || 'Portfolio Visitor';
+    const email = document.getElementById('email').value || 'Not provided';
+    const message = document.getElementById('message').value || 'Interested in your cybersecurity services';
+    
+    const mailtoUrl = `mailto:youssef03014@gmail.com?subject=${encodeURIComponent(`Cybersecurity Inquiry from ${name}`)}&body=${encodeURIComponent(`Name: ${name}%0AEmail: ${email}%0A%0AMessage:%0A${message}`)}`;
+    
+    window.location.href = mailtoUrl;
+    showEmailInstructions('your email app');
+}
+
+function showEmailInstructions(provider) {
+    setTimeout(() => {
+        alert(` ${provider} should be open!
+
+IMPORTANT:
+1. Check the pre-filled email
+2. Click the SEND button
+3. Wait for sending to complete
+
+If ${provider} didn't open, try the "Copy Template" method instead.`);
     }, 1000);
 }
+
+// Form validation
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    copyEmailTemplate();
+});
 
 
 // Updated competencies array for penetration testing
