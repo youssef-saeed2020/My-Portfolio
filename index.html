@@ -479,20 +479,73 @@
         </div>
     </div>
 </section>
-    <!-- Contact Section -->
-    <section id="contact">
-        <div class="container">
-            <h2 class="section-title">Get In Touch</h2>
-            <div class="contact-container">
+<section id="contact">
+    <div class="container">
+        <h2 class="section-title">Contact Me</h2>
+        
+        <div class="contact-container">
+            <!-- Method 1: Copy Template (Most Reliable) -->
+            <div class="contact-method">
+                <div class="method-header">
+                    <i class="fas fa-copy"></i>
+                    <h3>Method 1: Copy & Paste (Recommended)</h3>
+                </div>
+                <p class="method-description">We create a ready-to-send email template. You just copy and paste it into any email app.</p>
+                
                 <form class="contact-form" id="contactForm">
-                    <input type="text" id="name" placeholder="Your Name" required>
-                    <input type="email" id="email" placeholder="Your Email" required>
-                    <textarea id="message" placeholder="Your Message" rows="5" required></textarea>
-                    <button type="button" class="btn btn-primary" onclick="sendToGmail()">Send Message</button>
+                    <div class="form-group">
+                        <input type="text" id="name" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" placeholder="Your message here..." rows="5" required></textarea>
+                    </div>
+                    
+                    <button type="button" onclick="copyEmailTemplate()" class="btn btn-primary btn-large">
+                        <i class="fas fa-copy"></i> Copy Email Template
+                    </button>
                 </form>
+                
+                <div class="method-steps">
+                    <h4>After clicking the button:</h4>
+                    <ol>
+                        <li>We copy a complete email template</li>
+                        <li>You open your email app (Gmail, Outlook, etc.)</li>
+                        <li>Paste the template</li>
+                        <li>Click <strong>SEND</strong> - I'll receive it immediately!</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <!-- Method 2: Direct Email Links -->
+            <div class="contact-method">
+                <div class="method-header">
+                    <i class="fas fa-paper-plane"></i>
+                    <h3>Method 2: Quick Send</h3>
+                </div>
+                <p class="method-description">Open your email app directly with the message pre-filled.</p>
+                
+                <div class="email-buttons">
+                    <button onclick="openGmailCompose()" class="email-provider-btn gmail">
+                        <i class="fab fa-google"></i> Open Gmail
+                    </button>
+                    <button onclick="openOutlookCompose()" class="email-provider-btn outlook">
+                        <i class="fas fa-envelope"></i> Open Outlook
+                    </button>
+                    <button onclick="openDefaultEmail()" class="email-provider-btn default">
+                        <i class="fas fa-at"></i> Open Email App
+                    </button>
+                </div>
+                
+                <div class="method-note">
+                    <p><strong>Note:</strong> You'll still need to click "Send" in your email app.</p>
+                </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- Footer -->
     <footer>
