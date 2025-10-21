@@ -171,6 +171,7 @@ function sendToGmail() {
 }
 
 
+
 // Updated competencies array for penetration testing
 const competencies = [
     'Network Penetration Testing',
